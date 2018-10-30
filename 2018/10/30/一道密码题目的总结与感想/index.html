@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CTF,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ScapeGoat44" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="作者：ScapeGoat44 0x01前言&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;开业大吉，由于更换系统时不当操作导致以前的所有博客全部丢失，心痛ing。。。这是重建博客后的第一篇文章，emmm希望以后越来越好吧！。。">
+<meta name="keywords" content="CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一道密码题目的总结与感想">
+<meta property="og:url" content="http://yoursite.com/2018/10/30/一道密码题目的总结与感想/index.html">
+<meta property="og:site_name" content="ScapeGoat44">
+<meta property="og:description" content="作者：ScapeGoat44 0x01前言&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;开业大吉，由于更换系统时不当操作导致以前的所有博客全部丢失，心痛ing。。。这是重建博客后的第一篇文章，emmm希望以后越来越好吧！。。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.imgur.com/338ozFF.png">
+<meta property="og:image" content="https://i.imgur.com/8aahmP6.png">
+<meta property="og:image" content="https://i.imgur.com/FAK0MDw.png">
+<meta property="og:image" content="https://i.imgur.com/XXH4nfo.png">
+<meta property="og:updated_time" content="2018-10-30T07:10:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一道密码题目的总结与感想">
+<meta name="twitter:description" content="作者：ScapeGoat44 0x01前言&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;开业大吉，由于更换系统时不当操作导致以前的所有博客全部丢失，心痛ing。。。这是重建博客后的第一篇文章，emmm希望以后越来越好吧！。。">
+<meta name="twitter:image" content="https://i.imgur.com/338ozFF.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/30/一道密码题目的总结与感想/">
+
+
+
+
+
+  <title>一道密码题目的总结与感想 | ScapeGoat44</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/ScapeGoat44" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+	
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ScapeGoat44</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/30/一道密码题目的总结与感想/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ScapeGoat44">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">一道密码题目的总结与感想</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-30T15:02:43+08:00">
+                2018-10-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><font color="red"><center>作者：ScapeGoat44</center></font></p>
+<h2 id="0x01前言"><a href="#0x01前言" class="headerlink" title="0x01前言"></a>0x01前言</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;开业大吉，由于更换系统时不当操作导致以前的所有博客全部丢失，心痛ing。。。这是重建博客后的第一篇文章，emmm希望以后越来越好吧！。。<br><a id="more"></a></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;由于最近本人遇到了大量的异或加密题目，所以借助一道护网杯的解密题目对此知识点进行分析，关于异或，我们平时理解就是两个值如果相同则异或结果为1，如果两个值不相同，则异或结果为0。不过在此的异或则是把两个字符的ASCII码的二进制表示方式的每一位都进行异或然后得到一个新的二进制数，再把此二进制数还原为字符，在此再说一个重要的tip：0和任何单位异或得到的还是该单位，两个相同的单位异或得到的是0（这个很重要，很多异或题目都需要这样的方法解答）举个小例子：</p>
+<pre><code>字符    对应的二进制表达
+ a        0110 0001
+ &lt;        0011 1100
+</code></pre><p>两者进行异或得到的即为：</p>
+<pre><code>]        0101 1101
+</code></pre><p>借助代码验证一下我们的测试：</p>
+<p><img src="https://i.imgur.com/338ozFF.png" alt=""></p>
+<p>运行得到结果：</p>
+<p><img src="https://i.imgur.com/8aahmP6.png" alt=""></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;还有一个tip就是异或是循环可逆的，就是A和B异或的到C，然后C和B异或得到的就是A，A和C异或得到的就是B。我们直接改一下刚才的代码测试一下：</p>
+<p><img src="https://i.imgur.com/FAK0MDw.png" alt=""></p>
+<p>运行得到结果：</p>
+<p><img src="https://i.imgur.com/XXH4nfo.png" alt=""></p>
+<h2 id="0x02题目分析"><a href="#0x02题目分析" class="headerlink" title="0x02题目分析"></a>0x02题目分析</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;进行完基础知识的分析，我们来分析一道这样的密码题目，这道题目是护网杯上的一道Crypto题目，当时我和刘文博、杨瑞龙三个弟弟花了好长时间也没有做出来，好尴尬！。。赛后才发现我们三个陷入了一个误区，今天就重新分析一下这道题目。<br>题目：<br>fez.py fez.log文件<br>fez.py：</p>
+<pre><code>import os
+def xor(a,b):
+    assert len(a)==len(b)
+    c=&quot;&quot;
+    for i in range(len(a)):
+        c+=chr(ord(a[i])^ord(b[i]))
+    return c
+def f(x,k):
+    return xor(xor(x,k),7)
+def round(M,K):
+    L=M[0:27]
+    R=M[27:54]
+    new_l=R
+    new_r=xor(xor(R,L),K)
+    return new_l+new_r
+def fez(m,K):
+    for i in K:
+        m=round(m,i)
+    return m
+
+K=[]
+for i in range(7):
+    K.append(os.urandom(27))
+m=open(&quot;flag&quot;,&quot;rb&quot;).read()
+assert len(m)&lt;54
+m+=os.urandom(54-len(m))
+
+test=os.urandom(54)
+print (test.encode(&quot;hex&quot;))
+print (fez(test,K).encode(&quot;hex&quot;))
+print (fez(m,K).encode(&quot;hex&quot;))
+</code></pre><p>fez.log：</p>
+<pre><code>c8b84d08e5a8e60a49578f387fff5a90e9e7c181734bf05be4f5403c9ea24a0b8741a329991637e11fa69019cd3b01d7c95b65f5abd5
+5c3660c27cb9b3785a5ce06022e88bc831017e882d39475ea85d919ad9e5ac498f86c553216cab1f8f7468353d46ba8971efa9ca8c81
+519ab6fc0e435da00516b844f8fe664bfe9445992f478dc650701739a11ffda5bbeb643159d7e8cd03a2104c798a1ca734b905ee6c76
+</code></pre><p>&nbsp;&nbsp;&nbsp;&nbsp;这段python代码大多数人都可以看懂，所以我就简单的分析一下<br>&nbsp;&nbsp;&nbsp;&nbsp;首先看第一个函数xor，该函数接收两个参数，判断这两个参数的长度是否相等，如果相等就对两个参数进行逐位异或，异或后的值为c。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;第二个函数，接收两个参数，对这两个参数调用第一个函数xor进行异或，然后得到的结果与7进行异或，然后返回一个值，不过在这道题中，该函数并未使用。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;第三个函数，该函数是本题目的核心，首先接收两个参数M和K，然后将M分为两部分（通过后面的代码我们可以知道在此就是将M对半分），然后将M的后半部分当做返回值的前半部分，将M的前后异或再与K异或得到返回值的后半部分。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;第四个函数其实就是循环调用第三个函数进行加密。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;然后下面通过os模块得到了7个完全随机的长度为27的K值，其实就是我们熟知的密钥。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;test是一个长度为54的随机字符串，然后观察两个文件很明显的就得出fez.log中的三行字符串分别是test的值（注意三行字符串都经过了hex编码）、test与K进行加密的结果、m（也就是flag）与K加密的结果。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;当时我们三个人一直都在想着怎么通过fez.log文件把flag逆运算出来，但是我们搞了很长时间。。终于放弃了！在赛后我们才发现这道题目其实如果真正理解了就会发现它特别简单，其实就是模拟一下正向加密过程，你就会发现想要的答案。</p>
+<p>现在我们首先正向模拟一下test和K的加密过程：</p>
+<pre><code>我们假设test的左半部分为L，右半部分为R
+K中有七个密钥，我们假设为K1到K7
+第一次循环：R+R^L^K1
+第二次循环：R^L^K1+R^R^L^K1^K2
+         = R^L^K1+L^K1^K2
+第三次循环：L^K1^K2+R^K^K1^L^K1^K2^K3
+         = L^K1^K2+R^K2^K3
+第四次循环：R^K2^K3+L^K1^K2^R^K2^K3^K4
+         = R^K2^K3+L^K1^K3^K4
+第五次循环：L^K1^K3^K4+R^K2^K3^L^K1^K3^K4^k5
+         = L^K1^R^K3^K4+K2^L^K1^K4^K5
+第六次循环：K2^L^K1^K4^K5+L^K1^R^K3^K4^K2^L^K1^K4^K5^K6
+         = K2^L^K1^K4^K5+R^K3^K2^K5^K6
+第七次循环：R^K3^K2^K5^K6+K2^L^K1^K4^K5^R^K3^K2^K5^K6^K7
+         = R^K3^K2^K5^K6+L^K1^K4^R^K3^K6^K7
+</code></pre><p>&nbsp;&nbsp;&nbsp;&nbsp;通过模拟正向加密过程我们发现经过加密函数我们得到的结果只跟初始明文message的前后半段和七个密钥有关，所以m和K进行加密的结果和test和K加密的结果出了R和L不相同其他任何都是相同的！通过这里我们就可以得到我们想要的m。</p>
+<h2 id="0x03解密"><a href="#0x03解密" class="headerlink" title="0x03解密"></a>0x03解密</h2><p>解密脚本：</p>
+<pre><code>import os
+def xor(a,b):
+    assert len(a) == len(b)
+    c = &apos;&apos;
+    for i in range(len(a)):
+        c += chr(ord(a[i]) ^ ord(b[i]))
+    return c
+
+test = &apos;50543fc0bca1bb4f21300f0074990f846a8009febded0b2198324c1b31d2e2563c908dcabbc461f194e70527e03a807e9a478f9a56f7&apos;
+test = test.decode(&apos;hex&apos;)
+test_k = &apos;66bbd551d9847c1a10755987b43f8b214ee9c6ec2949eef01321b0bc42cffce6bdbd604924e5cbd99b7c56cf461561186921087fa1e9&apos;
+test_k = test_k.decode(&apos;hex&apos;)
+m_k = &apos;44fc6f82bdd0dff9aca3e0e82cbb9d6683516524c245494b89c272a83d2b88452ec0bfa0a73ffb42e304fe3748896111b9bdf4171903&apos;
+m_k = m_k.decode(&apos;hex&apos;)
+
+l = test[0:27]
+r = test[27:54]
+l1 = test_k[0:27]
+r1 = test_k[27:54]
+l2 = m_k[0:27]
+r2 = m_k[27:54]
+
+c = xor(xor(l,r),r1)
+Lr = xor(c,r2)
+d = xor(r,l1)
+R = xor(d,l2)
+L = xor(Lr,R)
+m = L+R  
+print m
+</code></pre><p>&nbsp;&nbsp;&nbsp;&nbsp;解密代码前半段都没什么说的，主要对后半段进行说明，通过模拟正向加密过程，我们得到最终的密文为R^K3^K2^K5^K6+L^K1^K4^R^K3^K6^K7，其中L、R为明文的左右部分，c = xor(xor(l,r),r1)，仔细看这行代码其实代表的是L^R^L^K1^K4^R^K3^K6^K7，我们发现其中的L和R都被消掉了，所以我们得到了K1^K4^K3^K6^K7的值，Lr = xor(c,r2)，这行代码代表的就是K1^K4^K3^K6^K7^L^K1^K4^R^K3^K6^K7（注意其中的L和R为m的L和R），相同单位异或为零，零与其它异或为它本身，所以我们就得到了m的左右部分异或的结果R^L，d = xor(r,l1)，这行代码代表的是R^R^K3^K2^K5^K6,R被消除，所以我们就得到了K3^K2^K5^K6的值，R = xor(d,l2)代表的就是K3^K2^K5^K6^R^K3^K2^K5^K6（其中R为m的R），所以我们就得到了m的右半部分R，结合刚刚得到的L^R我们就可以通过L^R^R得到m的左半部分L，至此我们就得到了我们想要的明文m！</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;关于异或解密我们主要用到的知识点就是1、异或是互逆的；2、0和任何单位异或得到的还是该单位，两个相同的单位异或得到的是0！！</p>
+
+      
+    </div>
+    
+    
+    
+	
+	
+	  <div>
+	        
+	  </div>
+	
+	
+    
+	
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      </div>
+    
+	
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CTF/" rel="tag"><i class="fa fa-tag"></i> CTF</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ScapeGoat44" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zut.edu.cn" target="_blank" title="ZZTI">
+                      
+                        <i class="fa fa-fw fa-globe"></i>ZZTI</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://secnav.dropsec.xyz/" target="_blank" title="Drops">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Drops</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/DropsOfZut/awesome-security-weixin-official-accounts" target="_blank" title="offical-accounts">
+                      
+                        <i class="fa fa-fw fa-globe"></i>offical-accounts</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01前言"><span class="nav-number">1.</span> <span class="nav-text">0x01前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02题目分析"><span class="nav-number">2.</span> <span class="nav-text">0x02题目分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03解密"><span class="nav-number">3.</span> <span class="nav-text">0x03解密</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+
+<link rel="stylesheet" href="/lib/prettify/skins/prettify.css.css" type="text/css">
+<script src="/lib/prettify/prettify.js" type="text/javascript"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+      prettyPrint();
+  });
+</script>
