@@ -326,7 +326,7 @@
  a        0110 0001
  &lt;        0011 1100
 </code></pre><p>两者进行异或得到的即为：</p>
-<pre><code>]        0101 1101
+<pre><code> ]        0101 1101
 </code></pre><p>借助代码验证一下我们的测试：</p>
 <p><img src="https://i.imgur.com/338ozFF.png" alt=""></p>
 <p>运行得到结果：</p>
@@ -399,17 +399,17 @@ K中有七个密钥，我们假设为K1到K7
 <pre><code>import os
 def xor(a,b):
     assert len(a) == len(b)
-    c = &apos;&apos;
+    c = &#39;&#39;
     for i in range(len(a)):
         c += chr(ord(a[i]) ^ ord(b[i]))
     return c
 
-test = &apos;50543fc0bca1bb4f21300f0074990f846a8009febded0b2198324c1b31d2e2563c908dcabbc461f194e70527e03a807e9a478f9a56f7&apos;
-test = test.decode(&apos;hex&apos;)
-test_k = &apos;66bbd551d9847c1a10755987b43f8b214ee9c6ec2949eef01321b0bc42cffce6bdbd604924e5cbd99b7c56cf461561186921087fa1e9&apos;
-test_k = test_k.decode(&apos;hex&apos;)
-m_k = &apos;44fc6f82bdd0dff9aca3e0e82cbb9d6683516524c245494b89c272a83d2b88452ec0bfa0a73ffb42e304fe3748896111b9bdf4171903&apos;
-m_k = m_k.decode(&apos;hex&apos;)
+test = &#39;50543fc0bca1bb4f21300f0074990f846a8009febded0b2198324c1b31d2e2563c908dcabbc461f194e70527e03a807e9a478f9a56f7&#39;
+test = test.decode(&#39;hex&#39;)
+test_k = &#39;66bbd551d9847c1a10755987b43f8b214ee9c6ec2949eef01321b0bc42cffce6bdbd604924e5cbd99b7c56cf461561186921087fa1e9&#39;
+test_k = test_k.decode(&#39;hex&#39;)
+m_k = &#39;44fc6f82bdd0dff9aca3e0e82cbb9d6683516524c245494b89c272a83d2b88452ec0bfa0a73ffb42e304fe3748896111b9bdf4171903&#39;
+m_k = m_k.decode(&#39;hex&#39;)
 
 l = test[0:27]
 r = test[27:54]
